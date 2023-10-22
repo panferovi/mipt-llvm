@@ -1,6 +1,6 @@
 #include "cell_field.h"
 
-extern int GetRandomInteger();
+int GetRandomInteger();
 
 cell_t CellField_dead_cell = 0;
 cell_t CellField_live_cell = 1;
