@@ -13,6 +13,6 @@ void ClearFrame();
 
 void DisplayFrame();
 
-void SetPixel(int, int, int);
+void SetPixel(int x, int y, int argb);
 
 #endif  // GRAPHIC_LIB_H

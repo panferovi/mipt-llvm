@@ -1,0 +1,17 @@
+sitofp counter: 27952 opcode: 44
+sub counter: 158400 opcode: 15
+add counter: 1246428 opcode: 13
+alloca counter: 2240165 opcode: 31
+call counter: 2256674 opcode: 56
+zext counter: 730000 opcode: 39
+store counter: 4025776 opcode: 33
+bitcast counter: 1248620 opcode: 49
+sext counter: 2926138 opcode: 40
+br counter: 4998022 opcode: 2
+xor counter: 10000 opcode: 30
+load counter: 11475897 opcode: 32
+getelementptr counter: 4817164 opcode: 34
+icmp counter: 3006935 opcode: 53
+ret counter: 970060 opcode: 1
+srem counter: 10000 opcode: 23
+trunc counter: 1 opcode: 38

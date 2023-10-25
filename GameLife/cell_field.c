@@ -77,6 +77,7 @@ void CellField_SetNearbyCells(CellField *field, int *nearby_cells, int i, int j)
     nearby_cells[7] = field->cells[down_idx][right_idx];
 }
 
-int CellField_IsCellDead(cell_t cell) {
+int CellField_IsCellDead(cell_t cell)
+{
     return cell == CellField_dead_cell;
 }

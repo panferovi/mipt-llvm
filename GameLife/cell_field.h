@@ -5,8 +5,8 @@ typedef int cell_t;
 
 typedef struct {
 
-#define HEIGHT 720
-#define WIDTH 1280
+#define HEIGHT 100
+#define WIDTH 100
 #define FERTILITY_FACTOR 5
 
     cell_t cells[HEIGHT][WIDTH];
