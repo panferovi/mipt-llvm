@@ -1,7 +1,5 @@
 #include <unordered_map>
-#include <string>
 #include <fstream>
-#include <vector>
 
 struct InstrunctionInfo {
     uint64_t opcode {0};

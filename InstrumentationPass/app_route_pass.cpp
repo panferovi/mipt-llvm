@@ -31,16 +31,15 @@ public:
 
         for (auto &&basic_block : function) {
             for (auto &&instruction : basic_block) {
-                if (std::strcmp(instruction.getOpcodeName(), "phi") == 0) {
+                if (dyn_cast<PHINode>(&instruction)) {
                     continue;
                 }
                 builder.SetInsertPoint(&instruction);
+                Value *instr_dump = builder.CreateGlobalStringPtr(instruction.getOpcodeName());
+                Value *instr_opcode = ConstantInt::get(builder.getInt64Ty(), instruction.getOpcode());
+                builder.CreateCall(route_method, {instr_dump, instr_opcode});
                 if (auto *main_ret = dyn_cast<ReturnInst>(&instruction); main_ret && function.getName() == "main") {
                     builder.CreateCall(dump_method, {});
-                } else {
-                    Value *instr_dump = builder.CreateGlobalStringPtr(instruction.getOpcodeName());
-                    Value *instr_opcode = ConstantInt::get(builder.getInt64Ty(), instruction.getOpcode());
-                    builder.CreateCall(route_method, {instr_dump, instr_opcode});
                 }
             }
         }
@@ -57,4 +56,4 @@ static void registerMyPass(const llvm::PassManagerBuilder &, llvm::legacy::PassM
     PM.add(new AppRoutePass());
 }
 
-static llvm::RegisterStandardPasses RegisterMyPass(llvm::PassManagerBuilder::EP_EarlyAsPossible, registerMyPass);
+static llvm::RegisterStandardPasses RegisterMyPass(llvm::PassManagerBuilder::EP_OptimizerLast, registerMyPass);
