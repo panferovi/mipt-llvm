@@ -8,6 +8,7 @@ $ ./GameLife/game_life
 
 # InstrumentationPass
 ```
-$ ninja app_route_pass
-$ ./InstrumentationPass/app_route_pass
+$ ninja app_trace_pass
+$ ./InstrumentationPass/app_trace_pass
+$ python3 ../InstrumentationPass/visualize_stat.py .
 ```
