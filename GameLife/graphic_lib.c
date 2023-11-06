@@ -58,7 +58,8 @@ void SetPixel(int x, int y, int argb)
     }
 
     sfRectangleShape_setFillColor(graphic_resources.pixel, sfGreen);
-    sfVector2f pixel_position = {x, y};
+    float x_pixel = x, y_pixel = y;
+    sfVector2f pixel_position = {x_pixel, y_pixel};
     sfRectangleShape_setPosition(graphic_resources.pixel, pixel_position);
     sfRenderWindow_drawRectangleShape(graphic_resources.window, graphic_resources.pixel, NULL);
 }

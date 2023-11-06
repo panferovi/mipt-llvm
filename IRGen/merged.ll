@@ -307,6 +307,95 @@ define dso_local i32 @CellField_IsCellDead(i32 noundef %0) local_unnamed_addr #6
   ret i32 %4
 }
 
+
+
+
+; Function Attrs: nounwind uwtable
+define dso_local void @SetPixels(%struct.CellField* nocapture noundef readonly %0) local_unnamed_addr #0 {
+  br label %2
+
+2:                                                ; preds = %1, %6
+  %3 = phi i64 [ 0, %1 ], [ %7, %6 ]
+  %4 = trunc i64 %3 to i32
+  br label %9
+
+5:                                                ; preds = %6
+  ret void
+
+6:                                                ; preds = %9
+  %7 = add nuw nsw i64 %3, 1
+  %8 = icmp eq i64 %7, 400
+  br i1 %8, label %5, label %2, !llvm.loop !5
+
+9:                                                ; preds = %2, %9
+  %10 = phi i64 [ 0, %2 ], [ %14, %9 ]
+  %11 = getelementptr inbounds %struct.CellField, %struct.CellField* %0, i64 0, i32 0, i64 %3, i64 %10
+  %12 = load i32, i32* %11, align 4, !tbaa !7
+  %13 = trunc i64 %10 to i32
+  tail call void @SetPixel(i32 noundef %13, i32 noundef %4, i32 noundef %12) #3
+  %14 = add nuw nsw i64 %10, 1
+  %15 = icmp eq i64 %14, 400
+  br i1 %15, label %6, label %9, !llvm.loop !11
+}
+
+
+
+; Function Attrs: nounwind uwtable
+define dso_local i32 @main() local_unnamed_addr #0 {
+  %1 = alloca %struct.CellField, align 4
+  %2 = tail call i32 @CreateGraphicResources(i32 noundef 400, i32 noundef 400) #3
+  %3 = icmp eq i32 %2, 0
+  br i1 %3, label %26, label %4
+
+4:                                                ; preds = %0
+  %5 = bitcast %struct.CellField* %1 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 640000, i8* nonnull %5) #3
+  call void @CellField_Initialize(%struct.CellField* noundef nonnull %1) #3
+  %6 = call i32 (...) @RenderWindowIsOpen() #3
+  %7 = icmp eq i32 %6, 0
+  br i1 %7, label %25, label %8
+
+8:                                                ; preds = %4, %22
+  call void (...) @ClearFrame() #3
+  call void @CellField_Update(%struct.CellField* noundef nonnull %1) #3
+  br label %9
+
+9:                                                ; preds = %12, %8
+  %10 = phi i64 [ 0, %8 ], [ %13, %12 ]
+  %11 = trunc i64 %10 to i32
+  br label %15
+
+12:                                               ; preds = %15
+  %13 = add nuw nsw i64 %10, 1
+  %14 = icmp eq i64 %13, 400
+  br i1 %14, label %22, label %9, !llvm.loop !5
+
+15:                                               ; preds = %15, %9
+  %16 = phi i64 [ 0, %9 ], [ %20, %15 ]
+  %17 = getelementptr inbounds %struct.CellField, %struct.CellField* %1, i64 0, i32 0, i64 %10, i64 %16
+  %18 = load i32, i32* %17, align 4, !tbaa !7
+  %19 = trunc i64 %16 to i32
+  call void @SetPixel(i32 noundef %19, i32 noundef %11, i32 noundef %18) #3
+  %20 = add nuw nsw i64 %16, 1
+  %21 = icmp eq i64 %20, 400
+  br i1 %21, label %12, label %15, !llvm.loop !11
+
+22:                                               ; preds = %12
+  call void (...) @DisplayFrame() #3
+  %23 = call i32 (...) @RenderWindowIsOpen() #3
+  %24 = icmp eq i32 %23, 0
+  br i1 %24, label %25, label %8, !llvm.loop !12
+
+25:                                               ; preds = %22, %4
+  call void (...) @DestroyGraphicResources() #3
+  call void @llvm.lifetime.end.p0i8(i64 640000, i8* nonnull %5) #3
+  br label %26
+
+26:                                               ; preds = %0, %25
+  %27 = phi i32 [ 0, %25 ], [ 1, %0 ]
+  ret i32 %27
+}
+
 ; Function Attrs: argmemonly nofree nounwind willreturn
 declare void @llvm.memcpy.p0i8.p0i8.i64(i8* noalias nocapture writeonly, i8* noalias nocapture readonly, i64, i1 immarg) #7
 

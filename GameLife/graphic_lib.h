@@ -15,4 +15,6 @@ void DisplayFrame();
 
 void SetPixel(int x, int y, int argb);
 
+int GetRandomInteger();
+
 #endif  // GRAPHIC_LIB_H

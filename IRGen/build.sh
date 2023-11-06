@@ -1,0 +1,1 @@
+clang++ `llvm-config --cppflags --ldflags --libs` -lcsfml-graphics -lcsfml-window -lcsfml-system app_ir_gen.cpp -o app_ir_gen
